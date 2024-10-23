@@ -1,1 +1,26 @@
-111
+#define CLK 3     // 定义 CLK 引脚
+#define LED 12    // 定义 LED 引脚
+
+int lastCLKState;    // 上一次 CLK 的状态
+int currentCLKState; // 当前 CLK 的状态
+
+void setup() {
+  pinMode(CLK, INPUT);   // 设置 CLK 引脚为输入
+  pinMode(LED, OUTPUT);  // 设置 LED 引脚为输出
+  digitalWrite(LED, LOW); // 确保 LED 初始为关闭状态
+  
+  lastCLKState = digitalRead(CLK); // 读取初始 CLK 状态
+}
+
+void loop() {
+  currentCLKState = digitalRead(CLK);  // 读取当前 CLK 状态
+
+  // 检测是否从 LOW 变为 HIGH
+  if (currentCLKState == HIGH && lastCLKState == LOW) {
+    digitalWrite(LED, HIGH);  // 点亮 LED
+    delay(30);               // 等待 100 毫秒
+    digitalWrite(LED, LOW);   // 关闭 LED
+  }
+
+  lastCLKState = currentCLKState; // 更新 CLK 状态
+}
