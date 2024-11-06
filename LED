@@ -1,0 +1,37 @@
+const int ledPins[] = {2, 3, 4, 5, 6}; 
+const int numLeds = 5;                
+int currentLed = 0;               
+int direction = 1;    //direction                 
+unsigned long previousMillis = 0;      
+const unsigned long interval = 200;    
+
+void setup() {
+  for (int i = 0; i < numLeds; i++) {
+    pinMode(ledPins[i], OUTPUT);       
+  }
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+
+  // time pass
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;    // last time
+
+    // all LEDs off
+    for (int i = 0; i < numLeds; i++) {
+      digitalWrite(ledPins[i], LOW);
+    }
+
+    // LED on 
+    digitalWrite(ledPins[currentLed], HIGH);
+
+    // target LED
+    currentLed += direction;
+
+    // line end
+    if (currentLed == numLeds - 1 || currentLed == 0) {
+      direction = -direction;
+    }
+  }
+}
